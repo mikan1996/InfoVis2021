@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="Vec3.js"></script>
+        <title>W02:Task1~3</title>
+    </head>
+
+    <body>
+        <input type="number" id="p1x" name="tentacles"
+       min="-100" max="100" placeholder="p1x">
+        <input type="number" id="p1y" name="tentacles"
+       min="-100" max="100" placeholder="p1y">
+        <input type="number" id="p1z" name="tentacles"
+       min="-100" max="100" placeholder="p1z">
+        <input type="number" id="p2x" name="tentacles"
+       min="-100" max="100" placeholder="p2x">
+        <input type="number" id="p2y" name="tentacles"
+       min="-100" max="100" placeholder="p2y">
+        <input type="number" id="p2z" name="tentacles"
+       min="-100" max="100" placeholder="p2z">
+        <input type="number" id="p3x" name="tentacles"
+       min="-100" max="100" placeholder="p3x">
+        <input type="number" id="p3y" name="tentacles"
+       min="-100" max="100" placeholder="p3y">
+        <input type="number" id="p3z" name="tentacles"
+       min="-100" max="100" placeholder="p3z">
+
+       <input type="button" id="sub" name="計算" value="計算を行う">
+        <p id="target"></p>
+        <script>
+            
+
+            var p1x,p1y,p1z;
+            var p2x,p2y,p2z;
+            var p3x,p3y,p3z;
+
+            var element = document.getElementById('sub').addEventListener('click',(event) => {
+
+
+            p1x = document.getElementById('p1x').value;
+            p1y = document.getElementById('p1y').value;
+            p1z = document.getElementById('p1z').value;
+            p2x = document.getElementById('p2x').value;
+            p2y = document.getElementById('p2y').value;
+            p2z = document.getElementById('p2z').value;
+            p3x = document.getElementById('p3x').value;
+            p3y = document.getElementById('p3y').value;
+            p3z = document.getElementById('p3z').value;
+            
+            var v1 = new Vec3(p1x,p1y,p1z);
+            var v2 = new Vec3(p2x,p2y,p2z);
+            var v3 = new Vec3(p3x,p3y,p3z);
+            
+
+            var distance1 = Vec3.distance(v1,v2);
+            var distance2 = Vec3.distance(v2,v3);
+            var subtraction1 = Vec3.subtraction(v1,v2);
+            var subtraction2 = Vec3.subtraction(v2,v3); 
+            var area = Vec3.area(v1,v2,v3);
+
+            document.getElementById("target").innerHTML = "result is　"+ area;
+            })
+        </script>
+    </body>
+</html>
