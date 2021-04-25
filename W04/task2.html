@@ -4,10 +4,10 @@
     <title>task2</title>
 </head>
 <body>
-<p>change of temperture</p>
+<p>number of infected people by COVID-19(4/24) </p>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-    var svg = d3.select("body").append("svg").attr("height",300).attr("width",1200);
+    var svg = d3.select("body").append("svg").attr("height",300).attr("width",1500);
     d3.csv("https://mikan1996.github.io/InfoVis2021/W04/task2.csv", draw );
     function draw(data){
 
@@ -16,13 +16,13 @@
         var group = svg.selectAll(".group").data(data).enter().append("g");
 
         var rect = group.append("rect").attr('class','rect')
-            .attr("x", padding*4)
+            .attr("x", padding*5)
             .attr("y", function(d,i){ return padding + i * ( height + padding ); })
-            .attr("width", function(d){ return d.number * padding; })
+            .attr("width", function(d){ return d.number })
             .attr("height", height);
 
         var text = group.append("text").attr('class', 'text')
-            .attr("x", 5)
+            .attr("x", 1)
             .attr("y", function(d,i){ return padding*2.5 + i * ( height + padding );})
             .text(function (d) {
                 return d.town;
