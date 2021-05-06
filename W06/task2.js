@@ -94,7 +94,12 @@ class ScatterPlot {
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
-            .attr("r", d => d.r );
+            .attr("r", d => d.r )
+        
+        self.svg.append("text")
+                .attr("x", self.inner_width * 0.6)
+                .attr("y", 30)
+                .text("Graph");    
 
         self.xaxis_group
             .call( self.xaxis )
