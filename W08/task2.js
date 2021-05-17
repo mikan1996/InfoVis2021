@@ -1,7 +1,6 @@
 d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task2.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = d.y; });
-        console.log(data)
+        data.forEach( d => { d.x = +d.x; d.y =+ d.y; });
         var config = {
             parent: '#drawing_region',
             width: 256,
@@ -10,14 +9,14 @@ d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task2.csv")
             axis_margin: {top:10, right:10, bottom:10, left:20}
         }
 
-        const barchart = new Barchart( config, data );
-        barchart.update();
+        const linechart = new Linechart( config, data );
+        linechart.update();
     })
     .catch( error => {
         console.log( error );
     });
 
-class Barchart {
+class Linechart {
 
     constructor( config, data ) {
         this.config = {
@@ -46,19 +45,19 @@ class Barchart {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .domain([0, d3.max(self.data, d => d.value)])
+            .domain([0, d3.max(self.data, d => d.x)])
             .range( [0, self.inner_width] );
 
-        self.yscale = d3.scaleBand()
-            .domain(self.data.map(d => d.label))
-            .range([0, self.inner_height])
-            .paddingInner(0.1);
-
+        self.yscale = d3.scaleLinear()
+            .domain([0, d3.max(self.data, d => d.y)])
+            .range([self.inner_height,0]);
+            
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(5)
             .tickSizeOuter(0);
 
-        self.yaxis = d3.axisLeft( self.yscale )
+        self.yaxis = d3.axisBottom( self.yscale )
+            .ticks(5)
             .tickSizeOuter(0);
 
         self.xaxis_group = self.chart.append('g')
@@ -72,8 +71,7 @@ class Barchart {
             self.yaxis = d3.axisLeft( self.yscale )
             .ticks(4)
         
-        self.line = self.svg.append('g')
-                    d3.line()
+        self.line = d3.line()
                     .x(d => d.x)
                     .y(d => d.y);
     }
@@ -86,9 +84,14 @@ class Barchart {
     render() {
         let self = this;
 
-        self.svg.append('path')
+        self.chart.append('path')
                 .attr('d',self.line(self.data))
                 .attr('stroke', 'black')
                 .attr('fill', 'none');
+
+        self.xaxis_group
+                .call( self.xaxis );
+        self.yaxis_group
+                .call( self.yaxis );
     }
 }
