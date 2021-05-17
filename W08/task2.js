@@ -1,6 +1,6 @@
-d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task1.csv")
+d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task2.csv")
     .then( data => {
-        data.forEach( d => { d.value = +d.value; d.label = d.label; });
+        data.forEach( d => { d.x = +d.x; d.y = d.y; });
         console.log(data)
         var config = {
             parent: '#drawing_region',
@@ -71,7 +71,11 @@ class Barchart {
             .attr('transform', `translate(0,0)`)
             self.yaxis = d3.axisLeft( self.yscale )
             .ticks(4)
-            
+        
+        self.line = self.svg.append('g')
+                    d3.line()
+                    .x(d => d.x)
+                    .y(d => d.y);
     }
 
     update() {
@@ -82,18 +86,9 @@ class Barchart {
     render() {
         let self = this;
 
-        self.chart.selectAll("rect")
-            .data(self.data)
-            .enter()
-            .append("rect")
-            .attr("x", 0)//chartの0
-            .attr("y", d => self.yscale(d.label))//yの開始地点
-            .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth());
-
-        self.xaxis_group
-            .call( self.xaxis );
-        self.yaxis_group
-            .call( self.yaxis );
+        self.svg.append('path')
+                .attr('d',self.line(self.data))
+                .attr('stroke', 'black')
+                .attr('fill', 'none');
     }
 }
