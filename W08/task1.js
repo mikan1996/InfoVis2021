@@ -1,7 +1,7 @@
 d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task1.csv")
     .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
-
+        data.forEach( d => { d.value = +d.value; d.label = d.label; });
+        console.log(data)
         var config = {
             parent: '#drawing_region',
             width: 256,
@@ -46,11 +46,11 @@ class Barchart {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.value)])
+            .domain([0, d3.max(self.data, d => d.value)])
             .range( [0, self.inner_width] );
 
         self.yscale = d3.scaleBand()
-            .domain(data.map(d => d.label))
+            .domain(self.data.map(d => d.label))
             .range([0, inner_height])
             .paddingInner(0.1);
 
@@ -76,16 +76,6 @@ class Barchart {
 
     update() {
         let self = this;
-        const axis_margin = self.config.axis_margin;
-
-        const xmin = d3.min( self.data, d => d.x );
-        const xmax = d3.max( self.data, d => d.x );
-        self.xscale.domain( [xmin - axis_margin.left, xmax + axis_margin.right] );
-
-        const ymin = d3.min( self.data, d => d.y );
-        const ymax = d3.max( self.data, d => d.y );
-        self.yscale.domain( [ymin - axis_margin.top, ymax + axis_margin.bottom] );
-
         self.render();
     }
 
