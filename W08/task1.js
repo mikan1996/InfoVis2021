@@ -6,8 +6,8 @@ d3.csv("https://mikan1996.github.io/InfoVis2021/W08/task1.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:40, right:40, bottom:40, left:40},
-            axis_margin: {top:10, right:10, bottom:10, left:20}
+            margin: {top:40, right:40, bottom:60, left:60},
+            axis_margin: {top:10, right:10, bottom:10, left:10}
         }
 
         const barchart = new Barchart( config, data );
