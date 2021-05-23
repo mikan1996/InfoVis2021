@@ -95,6 +95,12 @@ class ScatterPlot {
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
             .attr("r", d => d.r );
+
+        self.svg.append("text")
+                .attr("x", self.inner_width * 0.6)
+                .attr("y", 30)
+                .text("Graph");
+        
         
         self.chart.selectAll("circle")
             .on('mouseover', (e,d) => {
@@ -114,8 +120,26 @@ class ScatterPlot {
         });
 
         self.xaxis_group
-            .call( self.xaxis );
+            .call( self.xaxis )
+            .append("text")
+            .attr("fill", "black")
+            .attr("x", self.inner_width * 0.5)
+            .attr("y", 40)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12pt")
+            .attr("font-weight", "middle")
+            .text("x");
+
         self.yaxis_group
-            .call( self.yaxis );
+            .call( self.yaxis )
+            .append("text")
+            .attr("fill", "black")
+            .attr("text-anchor", "middle")
+            .attr("x", -self.inner_height * 0.5)
+            .attr("y", -10)
+            .attr("transform", "rotate(-90)")
+            .attr("font-weight", "middle")
+            .attr("font-size", "12pt")
+            .text("y");
     }
 }
