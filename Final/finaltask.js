@@ -7,20 +7,20 @@ d3.csv("https://mikan1996.github.io/InfoVis2021/Final/finaltask1.csv")
     .then( data => {
         input_data = data;
         input_data.forEach( d => {
-            d.sepal_length = +d.sepal_length;
-            d.sepal_width = +d.sepal_width;
+            d.percent = +d.percent;
+            d.stock = +d.stock;
         });
 
         const color_scale = d3.scaleOrdinal( d3.schemeCategory10 );
-        color_scale.domain(['setosa','versicolor','virginica']);
+        color_scale.domain(['Air','B-moves','Tilt']);
 
         scatter_plot = new ScatterPlot( {
             parent: '#drawing_region_scatterplot',
             width: 256,
             height: 256,
             margin: {top:10, right:10, bottom:50, left:50},
-            xlabel: 'Sepal length [cm]',
-            ylabel: 'Sepal width [cm]',
+            xlabel: 'Percent[%]',
+            ylabel: 'Stock',
             cscale: color_scale
         }, input_data );
         scatter_plot.update();
